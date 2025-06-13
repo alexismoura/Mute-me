@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView android:id="@+id/txtTelefoneStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App de telefone: Verificando..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnSetTelefone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ativar como telefone padrão" />
+
+    <View android:layout_height="24dp" android:layout_width="match_parent" />
+
+    <TextView android:id="@+id/txtSmsStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App de SMS: Verificando..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnSetSms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ativar como SMS padrão" />
+
+    <View android:layout_height="24dp" android:layout_width="match_parent" />
+
+    <TextView android:id="@+id/txtIdentificadorStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Identificador de chamadas: Verificando..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnSetIdentificador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ativar como identificador de chamadas" />
+</LinearLayout>

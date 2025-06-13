@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="notificacoes"
+        android:title="Ativar notificações"
+        android:defaultValue="true" />
+
+    <ListPreference
+        android:key="modo_bloqueio"
+        android:title="Modo de bloqueio"
+        android:summary="Escolha o modo de bloqueio"
+        android:entries="@array/modos_bloqueio"
+        android:entryValues="@array/modos_bloqueio_values"
+        android:defaultValue="todos" />
+
+</PreferenceScreen>
