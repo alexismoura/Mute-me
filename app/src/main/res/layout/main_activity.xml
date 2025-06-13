@@ -15,8 +15,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             android:popupTheme="@style/Theme.Muteme.NoActionBar"
             app:titleTextColor="?attr/colorOnPrimary"
@@ -24,25 +24,25 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Container para Fragments -->
+    <!-- Container para Fragments com margem inferior para o banner -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_gravity="top"
-        android:layout_weight="1"
-        android:layout_marginBottom="60dp" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- Banner Ad -->
+    <!-- Banner Ad com posicionamento fixo na parte inferior -->
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@android:color/white"
+        android:elevation="4dp"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-8578368178484138/8522123276" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
