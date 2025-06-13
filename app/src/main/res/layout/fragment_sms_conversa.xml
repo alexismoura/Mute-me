@@ -89,7 +89,6 @@
                 android:id="@+id/btn_enviar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enviar"
                 android:layout_marginStart="8dp"
                 app:icon="@android:drawable/ic_menu_send"/>
         </LinearLayout>
