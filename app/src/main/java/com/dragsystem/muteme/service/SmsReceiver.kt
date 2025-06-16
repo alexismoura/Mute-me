@@ -36,14 +36,17 @@ class SmsReceiver : BroadcastReceiver() {
                 Log.d("MuteMe", "📩 SMS de: $sender")
                 Log.d("MuteMe", "Conteúdo: $body")
 
-                val deveBloquear = when (config.modoBloqueio) {
+                val deveBloquear = when (config.tipoBloqueio) {
                     "todos" -> true
-                    "apenas_contatos" -> !isNumberInContacts(context, sender)
-                    "lista" -> db.numeroBloqueadoDao().estaNaLista(sender)
+                    "fora_contatos" -> !isNumberInContacts(context, sender)
                     else -> false
                 }
 
-                Log.d("MuteMe", "Configuração: ${config.modoBloqueio}, Bloquear: $deveBloquear")
+                if (deveBloquear) {
+                    abortBroadcast()
+                }
+
+                Log.d("MuteMe", "Configuração: ${config.tipoBloqueio}, Bloquear: $deveBloquear")
 
                 // Salvar no histórico
                 val sms = SmsEntity()

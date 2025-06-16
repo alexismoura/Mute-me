@@ -23,7 +23,7 @@
                 android:id="@+id/txtStatusTitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status do bloqueio"
+                android:text="Status do Bloqueio"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -41,7 +41,7 @@
                 android:id="@+id/btnDefinirComoPadrao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ativar como app padrão"
+                android:text="Ativar como App Padrão"
                 style="@style/Widget.MaterialComponents.Button" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -56,7 +56,92 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Aqui serão adicionadas as outras configurações -->
+            <!-- Configurações de Notificação -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notificações"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_notificacoes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Receber notificações"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Configurações de Bloqueio -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de Bloqueio"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_tipo_bloqueio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radio_bloqueio_nenhum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Não bloquear ninguém"
+                            android:textSize="16sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio_bloqueio_fora_contatos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bloquear todos fora dos contatos"
+                            android:textSize="16sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio_bloqueio_todos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bloquear todos"
+                            android:textSize="16sp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>

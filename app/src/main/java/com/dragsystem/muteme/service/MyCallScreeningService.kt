@@ -28,19 +28,17 @@ class MyCallScreeningService : CallScreeningService() {
         Log.d("MuteMe", "Número recebido: $number")
 
         val db = AppDatabase.getInstance(applicationContext)
-        val dao = db?.configuracoesDao()?.obterConfiguracoes()
+        val config = db?.configuracoesDao()?.obterConfiguracoes()
+        val tipoBloqueio = config?.tipoBloqueio
 
-        val modoBloqueio = dao?.modoBloqueio
-
-        val deveBloquear = when (modoBloqueio) {
+        val deveBloquear = when (tipoBloqueio) {
             "todos" -> true
-            "apenas_contatos" -> !isNumberInContacts(this, number)
-            "lista" -> db.numeroBloqueadoDao().estaNaLista(number)
+            "fora_contatos" -> !isNumberInContacts(this, number)
             else -> false
         }
 
         Log.d("MuteMe", "Recebendo chamada de: $number")
-        Log.d("MuteMe", "Modo: $modoBloqueio | Deve bloquear: $deveBloquear")
+        Log.d("MuteMe", "Modo: $tipoBloqueio | Deve bloquear: $deveBloquear")
 
         if (deveBloquear) {
             try {
@@ -61,6 +59,16 @@ class MyCallScreeningService : CallScreeningService() {
                 CallResponse.Builder()
                     .setDisallowCall(true)
                     .setRejectCall(true)
+                    .setSkipCallLog(true)
+                    .setSkipNotification(true)
+                    .build()
+            )
+        } else {
+            respondToCall(
+                callDetails,
+                CallResponse.Builder()
+                    .setDisallowCall(false)
+                    .setRejectCall(false)
                     .setSkipCallLog(false)
                     .setSkipNotification(false)
                     .build()

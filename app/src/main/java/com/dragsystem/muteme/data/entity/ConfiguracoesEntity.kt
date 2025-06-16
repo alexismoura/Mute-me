@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "configuracoes")
 data class ConfiguracoesEntity(
     @PrimaryKey val id: Int = 1, // sempre 1 — será um singleton
-    val modoBloqueio: String = "lista",
-    val notificacoes: Boolean = true
+    var notificacoesAtivas: Boolean = true,
+    var tipoBloqueio: String = "nenhum" // "nenhum" ou "fora_contatos"
 )
