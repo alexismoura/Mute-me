@@ -12,31 +12,25 @@ import android.util.Log
 import com.dragsystem.muteme.data.AppDatabase
 import com.dragsystem.muteme.data.entity.ConfiguracoesEntity
 import com.dragsystem.muteme.data.entity.SmsEntity
+import com.dragsystem.muteme.util.NotificationManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class SmsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == "android.provider.Telephony.SMS_RECEIVED" ||
-            intent.action == "android.provider.Telephony.SMS_DELIVER") {
-            val bundle: Bundle? = intent.extras
-            val pdus = bundle?.get("pdus") as? Array<*>
-            val format = bundle?.getString("format")
-
-            val db = AppDatabase.getInstance(context)
-            val config = db.configuracoesDao().obterConfiguracoes()
-                ?: ConfiguracoesEntity() // valores padrão
-
-            pdus?.forEach {
-                val message = SmsMessage.createFromPdu(it as ByteArray, format)
-                val sender = message.originatingAddress ?: return@forEach
-                val body = message.messageBody
+        if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
+            val messages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
+            messages?.forEach { sms ->
+                val sender = sms.originatingAddress ?: return@forEach
+                val body = sms.messageBody
 
                 Log.d("MuteMe", "📩 SMS de: $sender")
                 Log.d("MuteMe", "Conteúdo: $body")
 
-                val deveBloquear = when (config.tipoBloqueio) {
+                val db = AppDatabase.getInstance(context)
+                val config = db.configuracoesDao().obterConfiguracoes()
+                val deveBloquear = when (config?.tipoBloqueio) {
                     "todos" -> true
                     "fora_contatos" -> !isNumberInContacts(context, sender)
                     else -> false
@@ -44,9 +38,16 @@ class SmsReceiver : BroadcastReceiver() {
 
                 if (deveBloquear) {
                     abortBroadcast()
+                } else if (config != null) {
+                    if (config.notificacoesAtivas) {
+                        // Mostrar notificação apenas se não for bloqueado e notificações estiverem ativas
+                        NotificationManager(context).showSmsNotification(sender, body)
+                    }
                 }
 
-                Log.d("MuteMe", "Configuração: ${config.tipoBloqueio}, Bloquear: $deveBloquear")
+                if (config != null) {
+                    Log.d("MuteMe", "Configuração: ${config.tipoBloqueio}, Bloquear: $deveBloquear")
+                }
 
                 // Salvar no histórico
                 val sms = SmsEntity()
