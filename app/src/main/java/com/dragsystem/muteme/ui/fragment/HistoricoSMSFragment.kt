@@ -13,6 +13,7 @@ import com.dragsystem.muteme.R
 import com.dragsystem.muteme.data.AppDatabase
 import com.dragsystem.muteme.data.entity.ChamadaEntity
 import com.dragsystem.muteme.data.entity.SmsEntity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -29,6 +30,14 @@ class HistoricoSMSFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_lista, container, false)
 
         val listView = view.findViewById<ListView>(R.id.listView)
+        val fab = view.findViewById<FloatingActionButton>(R.id.fab_novo)
+
+        // Configurar o FAB para SMS
+        fab.setImageResource(android.R.drawable.ic_menu_send)
+        fab.setOnClickListener {
+            val fragment = ConversaSmsFragment.novaInstancia("")
+            MainActivity.exibirFragmento(fragment)
+        }
 
         // Lista fictícia de SMS
         val db = AppDatabase.getInstance(requireContext())

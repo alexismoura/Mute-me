@@ -1,5 +1,7 @@
 package com.dragsystem.muteme.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.dragsystem.muteme.MainActivity
 import com.dragsystem.muteme.R
 import com.dragsystem.muteme.data.AppDatabase
 import com.dragsystem.muteme.data.entity.ChamadaEntity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -27,6 +30,16 @@ class HistoricoChamadasFragment : Fragment() {
         // Infla o layout
         val view: View = inflater.inflate(R.layout.fragment_lista, container, false)
         val listView = view.findViewById<ListView>(R.id.listView)
+        val fab = view.findViewById<FloatingActionButton>(R.id.fab_novo)
+
+        // Configurar o FAB para chamadas
+        fab.setImageResource(android.R.drawable.ic_menu_call)
+        fab.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        }
 
         // Dados fictícios para exibição
         val db = AppDatabase.getInstance(requireContext())
