@@ -19,7 +19,7 @@ import java.util.Locale
 
 class SmsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
+        if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION || intent.action == Telephony.Sms.Intents.SMS_DELIVER_ACTION) {
             val messages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
             messages?.forEach { sms ->
                 val sender = sms.originatingAddress ?: return@forEach
@@ -38,7 +38,9 @@ class SmsReceiver : BroadcastReceiver() {
 
                 if (deveBloquear) {
                     abortBroadcast()
-                } else if (config != null) {
+                }
+
+                if (config != null) {
                     if (config.notificacoesAtivas) {
                         // Mostrar notificação apenas se não for bloqueado e notificações estiverem ativas
                         NotificationManager(context).showSmsNotification(sender, body)
