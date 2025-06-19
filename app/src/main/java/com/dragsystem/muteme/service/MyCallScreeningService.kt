@@ -76,21 +76,24 @@ class MyCallScreeningService : CallScreeningService() {
         }
     }
 
-    private fun isNumberInContacts(context: Context, phoneNumber: String): Boolean {
-        val uri = Uri.withAppendedPath(
-            ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-            Uri.encode(phoneNumber)
-        )
+    private fun isNumberInContacts(context: Context, number: String): Boolean {
+        val contentResolver = context.contentResolver
+        val uri = android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+        val projection = arrayOf(android.provider.ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
 
-        val cursor = context.contentResolver.query(
-            uri,
-            arrayOf(ContactsContract.PhoneLookup._ID),
-            null,
-            null,
-            null
-        )
+        val normalizedInput = number.replace(Regex("[^\\d]"), "")
 
-        return cursor?.use { it.count > 0 } ?: false
+        cursor?.use {
+            while (it.moveToNext()) {
+                val contactNumber = it.getString(0)
+                val normalizedContact = contactNumber.replace(Regex("[^\\d]"), "")
+                if (normalizedContact.endsWith(normalizedInput) || normalizedInput.endsWith(normalizedContact)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private fun getCurrentDateTimeString(): String {
